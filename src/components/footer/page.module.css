@@ -1,0 +1,19 @@
+/* footer  */
+
+.container {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon{
+    opacity: 0.7;
+    cursor: pointer;
+}

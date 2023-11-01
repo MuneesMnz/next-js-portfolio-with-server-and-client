@@ -1,0 +1,39 @@
+.catTitle{
+    color: #53c28b;
+    
+}
+
+.item{
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.item:nth-child(2n+1){
+    flex-direction: row-reverse;
+}
+.content{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap:30px ;
+}
+
+.imgContainer{
+    flex: 1;
+    position: relative;
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.img{
+    object-fit: cover;
+    transition: all 0.3s ease-in;
+    cursor: pointer;
+
+}
+.img:hover{
+    transform: scale(1.05);
+}
