@@ -2,6 +2,16 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 
+const getData = async () => {
+  const res = await fetch("");
+
+  if (!res.ok) {
+    throw new Error("failed to fetch data");
+  }
+
+  return res.json();
+};
+
 const BlogItem = () => {
   return (
     <div className={styles.container}>
