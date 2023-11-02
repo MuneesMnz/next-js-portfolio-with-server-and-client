@@ -3,7 +3,12 @@ import styles from "./page.module.css";
 import Link from "next/link";
 
 const getData = async () => {
-  const res = await fetch("");
+  const res = await fetch("http://localhost:3000/api/posts", {
+    // next: {
+    //   revalidate: 10,
+    // },
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("failed to fetch data");
@@ -12,128 +17,33 @@ const getData = async () => {
   return res.json();
 };
 
-const BlogItem = () => {
+const BlogItem = async () => {
+  const data = await getData();
   return (
     <div className={styles.container}>
-      <div className={styles.blogContainer}>
-        <Link href="/blog/testId" className={styles.imageContainer}>
-          <Image
-            src={
-              "https://images.pexels.com/photos/18867498/pexels-photo-18867498/free-photo-of-london-city-fox.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-            }
-            fill={true}
-            className={styles.img}
-            alt=""
-          />
-        </Link>
-        <div className={styles.content}>
-          <h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam
-            eveniet
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui earum
-            quos eaque consectetur laudantium tempora aliquid velit corporis
-            soluta explicabo suscipit ducimus sit veritatis, sint numquam ea
-            esse beatae iure.
-          </p>
-        </div>
-      </div>
-      <div className={styles.blogContainer}>
-        <Link href="/blog/testId" className={styles.imageContainer}>
-          <Image
-            src={
-              "https://images.pexels.com/photos/18443847/pexels-photo-18443847/free-photo-of-light-bulbs-outdoors-at-night.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-            }
-            fill={true}
-            className={styles.img}
-            alt=""
-          />
-        </Link>
-        <div className={styles.content}>
-          <h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam
-            eveniet
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui earum
-            quos eaque consectetur laudantium tempora aliquid velit corporis
-            soluta explicabo suscipit ducimus sit veritatis, sint numquam ea
-            esse beatae iure.
-          </p>
-        </div>
-      </div>
-      <div className={styles.blogContainer}>
-        <Link href="/blog/testId" className={styles.imageContainer}>
-          <Image
-            src={
-              "https://images.pexels.com/photos/15547144/pexels-photo-15547144/free-photo-of-a-snowy-mountain-with-trees-on-top.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-            }
-            fill={true}
-            className={styles.img}
-            alt=""
-          />
-        </Link>
-        <div className={styles.content}>
-          <h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam
-            eveniet
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui earum
-            quos eaque consectetur laudantium tempora aliquid velit corporis
-            soluta explicabo suscipit ducimus sit veritatis, sint numquam ea
-            esse beatae iure.
-          </p>
-        </div>
-      </div>
-      <div className={styles.blogContainer}>
-        <Link href="/blog/testId" className={styles.imageContainer}>
-          <Image
-            src={
-              "https://images.pexels.com/photos/18925457/pexels-photo-18925457/free-photo-of-a-snowy-village-in-the-middle-of-the-ocean-with-mountains-in-the-background.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-            }
-            fill={true}
-            className={styles.img}
-            alt=""
-          />
-        </Link>
-        <div className={styles.content}>
-          <h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam
-            eveniet
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui earum
-            quos eaque consectetur laudantium tempora aliquid velit corporis
-            soluta explicabo suscipit ducimus sit veritatis, sint numquam ea
-            esse beatae iure.
-          </p>
-        </div>
-      </div>
-      <div className={styles.blogContainer}>
-        <Link href="/blog/testId" className={styles.imageContainer}>
-          <Image
-            src={
-              "https://images.pexels.com/photos/18695215/pexels-photo-18695215/free-photo-of-legs-and-shoes-of-person-standing-on-stone-blocks-over-water.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-            }
-            fill={true}
-            className={styles.img}
-            alt=""
-          />
-        </Link>
-        <div className={styles.content}>
-          <h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam
-            eveniet
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui earum
-            quos eaque consectetur laudantium tempora aliquid velit corporis
-            soluta explicabo suscipit ducimus sit veritatis, sint numquam ea
-            esse beatae iure.
-          </p>
-        </div>
+      <div>
+        {data.map((item) => {
+          return (
+            <Link
+              href={`/blog/${item._id}`}
+              className={styles.blogContainer}
+              key={item._id}
+            >
+              <div className={styles.imageContainer}>
+                <Image
+                  src={item.img}
+                  fill={true}
+                  className={styles.img}
+                  alt=""
+                />
+              </div>
+              <div className={styles.content}>
+                <h2>{item.title}</h2>
+                <p>{item.desc}</p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
